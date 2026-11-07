@@ -1,0 +1,21 @@
+services:
+  skedule-parse:
+    build: .
+    image: skedule-parse:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - BIND_ADDR=0.0.0.0:8080
+    ports:
+      - "8080:8080"
+    # Sized for a minimal 1 vCPU / 1 GB RAM server: the service itself
+    # typically uses a small fraction of this, the headroom is for the OS
+    # and any reverse proxy running alongside it.
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+    mem_limit: 256m
+    cpus: 1.0
